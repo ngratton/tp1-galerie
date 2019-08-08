@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Galerie</title>
+	<link rel="stylesheet" href="./src/galerie.css" />
+	<script type="module">
+		import Galerie from "./src/Galerie.js";
+		Galerie.load().then(() => Galerie.main());
+	</script>
+</head>
+
+<body>
+	<div id="interface">
+		<header>
+			<h1>Ma galerie</h1>
+		</header>
+		<footer><span>&copy; 2019</span><strong>Ma galerie</strong></footer>
+		<div class="body" id="app">
+			<table id="galerie">
+				<tbody>
+					<tr>
+						<td><a href="images/chat_assis.jpg" target="_blank" title="Cliquer pour grossir"><img src="images/chat_assis.jpg" alt="Chat assis"></a></td>
+						<td><a href="images/chat_zoom.jpg" target="_blank" title="Cliquer pour grossir"><img src="images/chat_zoom.jpg" alt="Gros plan sur un chat"></a></td>
+						<td><a href="images/chien_vadrouille.jpg" target="_blank" title="Cliquer pour grossir"><img src="images/chien_vadrouille.jpg" alt="Chien qui a l'air d'une vadrouille"></a></td>
+					</tr>
+					<tr>
+						<td><a href="images/chienFondBlanc.jpg" target="_blank" title="Cliquer pour grossir"><img src="images/chienFondBlanc.jpg" alt="Chien sur fond blanc"></a></td>
+						<td><a href="images/face%20de%20chat.png" target="_blank" title="Cliquer pour grossir"><img src="images/face%20de%20chat.png" alt="Face de chat"></a></td>
+						<td><a href="images/niche.jpg" target="_blank" title="Cliquer pour grossir"><img src="images/niche.jpg" alt="Chien dans sa niche"></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!--
+	<div id="backdrop">
+		<span class="close">&#x2716;</span>
+		<span class="precedent">&#x276e;</span>
+		<figure class="diapo">
+			<img src="images/niche.jpg" alt="Chien dans sa niche" />
+			<figcaption>Chien dans sa niche</figcaption>
+		</figure>
+		<span class="suivant">&#x276f;</span>
+	</div>
+	-->
+
+</body>
+
+</html>
