@@ -11,20 +11,43 @@ export default class Galerie {
 		this.ajouterClic();
 	}
 	static ajouterClic() {
-		var liens = Array.from(this.app.querySelectorAll("#galerie a"));
-		for (let i = 0; i < liens.length; i = i + 1) {
-			var leLien = liens[i];
+		this.liens = Array.from(this.app.querySelectorAll("#galerie a"));
+		for (let i = 0; i < this.liens.length; i = i + 1) {
+			var leLien = this.liens[i];
 			leLien.addEventListener("click", e => {
 				e.preventDefault(); // Enlève la fonction définie dans le HTML; dans ce cas-ci, l'ouverture de l'image dans un nouvel onglet.
-				var position = liens.indexOf(e.currentTarget);
-				position = position + 1;
-				var nextImg = liens[position - 1];
-				var prevImg = liens[position + 1];
-				document.body.appendChild(this.retournerBackdrop(e.currentTarget, prevImg, nextImg));
+				document.body.appendChild(this.retournerBackdrop(e.currentTarget));
+				this.clicPrevImg();
+				this.position = this.liens.indexOf(e.currentTarget);
 			});
 		}
 	}
-	static retournerBackdrop(target, prevImg, nextImg) {
+	static clicPrevImg() {
+		this.liens = Array.from(this.app.querySelectorAll("#galerie a"));
+		for (let i = 0; i < this.liens.length; i = i + 1) {
+			var leLien = this.liens[i];
+			leLien.addEventListener("click", e => {
+				e.preventDefault(); // Enlève la fonction définie dans le HTML; dans ce cas-ci, l'ouverture de l'image dans un nouvel onglet.
+				document.body.appendChild(this.retournerBackdrop(e.currentTarget));
+				this.clicPrevImg();
+				this.position = this.liens.indexOf(e.currentTarget);;
+				console.log(this.liens[this.position]);
+			});
+		}
+		var currentImg = this.liens[this.position - 1];
+		console.log(currentImg);
+		// var liens = Array.from(this.app.querySelectorAll("#galerie a"));
+		// for (let i = 0; i < liens.length; i = i + 1) {
+		// 	var leLien = liens[i];
+		// 	leLien.addEventListener("click", e => {
+		// 		e.preventDefault(); // Enlève la fonction définie dans le HTML; dans ce cas-ci, l'ouverture de l'image dans un nouvel onglet.
+		// 		var position = liens.indexOf(e.currentTarget);;
+		// 		var nextImg = liens[position-1];
+		// 		var prevImg = liens[position+1];
+		// 	});
+		// }
+	}
+	static retournerBackdrop(target) {
 		var contenu = target.querySelector("img");
 		var imgAnimal = contenu.getAttribute("src");
 		var imgFigure = contenu.getAttribute("alt");
