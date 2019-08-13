@@ -9,50 +9,64 @@ export default class Galerie {
 	static main() {
 		this.app = document.getElementById("app");
 		this.ajouterClic();
+		this.imgArray = Array.from(this.app.querySelectorAll("#galerie a > img"));
 	}
 	static ajouterClic() {
-		this.liens = Array.from(this.app.querySelectorAll("#galerie a"));
-		for (let i = 0; i < this.liens.length; i = i + 1) {
-			var leLien = this.liens[i];
+		var liens = Array.from(this.app.querySelectorAll("#galerie a"));
+		for (let i = 0; i < liens.length; i = i + 1) {
+			var leLien = liens[i];
 			leLien.addEventListener("click", e => {
 				e.preventDefault(); // Enlève la fonction définie dans le HTML; dans ce cas-ci, l'ouverture de l'image dans un nouvel onglet.
 				document.body.appendChild(this.retournerBackdrop(e.currentTarget));
-				this.position = this.liens.indexOf(e.currentTarget);
-				var prevTarget = this.liens[this.position -1];
-				// console.log(prevTarget);
-				this.clicPrevImg(prevTarget);
-				var nextTarget = this.liens[this.position + 1];
-				// console.log(nextTarget);
-				this.clicNextImg(nextTarget);
+				var indexImg = liens.indexOf(e.currentTarget);
+				this.clicNextImg(indexImg);
+				this.clicPrevImg(indexImg);
 			});
 		}
 	}
-	static clicPrevImg(prevTarget) {
-		var prevTargetImg = prevTarget.querySelector("img");
-		// console.log(prevImg);
-		var prevImg = prevTargetImg.getAttribute("src");
-		var prevAlt = prevTargetImg.getAttribute("alt");
+	static clicPrevImg(indexImg) {
+		if (indexImg === 0) {
+			indexImg = 6;
+		};
 		var prevSpan = document.querySelector("span.precedent");
 		prevSpan.addEventListener("click", e => {
+			var prevTargetImg = this.imgArray[indexImg - 1];
+			var prevImg = prevTargetImg.getAttribute("src");
+			var prevAlt = prevTargetImg.getAttribute("alt");
 			var currentImg = document.querySelector("#backdrop figure > img");
 			var currentAlt = document.querySelector("#backdrop figure > figcaption")
 			currentImg.setAttribute("src", prevImg);
 			currentAlt.innerHTML = prevAlt;
+			if (indexImg === 1) {
+				indexImg = 6;
+			} else {
+				indexImg = indexImg - 1;
+			};			
+			this.clicNextImg(indexImg);
 		});
-		
 	}
-	static clicNextImg(nextTarget) {
-		var nextTargetImg = nextTarget.querySelector("img");
-		// console.log(nextImg);
-		var nextImg = nextTargetImg.getAttribute("src");
-		var nextAlt = nextTargetImg.getAttribute("alt");
+	
+	static clicNextImg(indexImg) {
+		if (indexImg === (this.imgArray.length)) {
+			indexImg = 0;
+		}
 		var nextSpan = document.querySelector("span.suivant");
 		nextSpan.addEventListener("click", e => {
+			var nextTargetImg = this.imgArray[indexImg + 1];
+			var nextImg = nextTargetImg.getAttribute("src");
+			var nextAlt = nextTargetImg.getAttribute("alt");
 			var currentImg = document.querySelector("#backdrop figure > img");
 			var currentAlt = document.querySelector("#backdrop figure > figcaption")
 			currentImg.setAttribute("src", nextImg);
+			currentImg.style.transition = "2s"
 			currentAlt.innerHTML = nextAlt;
-		})
+			if (indexImg === (this.imgArray.length - 2)) {
+				indexImg = 0;
+			} else {
+				indexImg = indexImg + 1;
+			};			
+			this.clicPrevImg(indexImg);
+		});
 	}
 	static retournerBackdrop(target) {
 		var contenu = target.querySelector("img");
