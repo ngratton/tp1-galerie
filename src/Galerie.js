@@ -25,20 +25,23 @@ export default class Galerie {
 		}
 	}
 	static clicPrevImg(indexImg) {
-		if (indexImg === 0) {
-			indexImg = 6;
-		};
+		var prevTargetImg;
 		var prevSpan = document.querySelector("span.precedent");
 		prevSpan.addEventListener("click", e => {
-			var prevTargetImg = this.imgArray[indexImg - 1];
+			if (indexImg === 0) {
+				indexImg = this.imgArray.length - 1;						
+				prevTargetImg = this.imgArray[indexImg];
+			} else {			
+				prevTargetImg = this.imgArray[indexImg - 1];
+			}
 			var prevImg = prevTargetImg.getAttribute("src");
 			var prevAlt = prevTargetImg.getAttribute("alt");
 			var currentImg = document.querySelector("#backdrop figure > img");
 			var currentAlt = document.querySelector("#backdrop figure > figcaption")
 			currentImg.setAttribute("src", prevImg);
 			currentAlt.innerHTML = prevAlt;
-			if (indexImg === 1) {
-				indexImg = 6;
+			if (indexImg === 0) {
+				indexImg = this.imgArray.length - 1;
 			} else {
 				indexImg = indexImg - 1;
 			};			
@@ -47,12 +50,15 @@ export default class Galerie {
 	}
 	
 	static clicNextImg(indexImg) {
-		if (indexImg === (this.imgArray.length)) {
-			indexImg = 0;
-		}
+		var nextTargetImg;
 		var nextSpan = document.querySelector("span.suivant");
 		nextSpan.addEventListener("click", e => {
-			var nextTargetImg = this.imgArray[indexImg + 1];
+			if (indexImg === this.imgArray.length - 1) {
+				indexImg = 0;
+				nextTargetImg = this.imgArray[indexImg];
+			} else {
+				nextTargetImg = this.imgArray[indexImg + 1];
+			}
 			var nextImg = nextTargetImg.getAttribute("src");
 			var nextAlt = nextTargetImg.getAttribute("alt");
 			var currentImg = document.querySelector("#backdrop figure > img");
@@ -60,7 +66,7 @@ export default class Galerie {
 			currentImg.setAttribute("src", nextImg);
 			currentImg.style.transition = "2s"
 			currentAlt.innerHTML = nextAlt;
-			if (indexImg === (this.imgArray.length - 2)) {
+			if (indexImg === this.imgArray.length - 1) {
 				indexImg = 0;
 			} else {
 				indexImg = indexImg + 1;
