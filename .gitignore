@@ -3,3 +3,6 @@
 # Example .gitignore files: https://github.com/github/gitignore
 /bower_components/
 /node_modules/
+ngratton_tp1-galerie.zip
+.gitignore
+galerie.txt
